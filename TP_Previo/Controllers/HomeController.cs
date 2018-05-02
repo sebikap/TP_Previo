@@ -38,17 +38,17 @@ namespace TP_Previo.Controllers
         public void SelectCountry()
         {
             ViewData["requestpais"] = Request.Form["paises"];
-            //if (User.Identity.Name != "" && Request.Form["Country"] != "")
-            //{
-                /*SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            if (User.Identity.IsAuthenticated && Request.Form["paises"] != "")
+            {
+                SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
                 conn.Open();
-                string query = "UPDATE dbo.AspNetUsers SET Country = " + Request.QueryString["Country"] + " WHERE Email = '" + User.Identity.Name + "'";
+                string query = "UPDATE dbo.AspNetUsers SET Country = '" + Request.Form["paises"] + "' WHERE Email = '" + User.Identity.Name + "'";
+                //ViewData["requestpais"] = query;
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.ExecuteNonQuery();
                 cmd.Dispose();
-                conn.Close();*/
-                ViewData["usuario"] = User.Identity.Name;
-            //}
+                conn.Close();
+            }
         }
 
         public void LoadCountryDDL()
