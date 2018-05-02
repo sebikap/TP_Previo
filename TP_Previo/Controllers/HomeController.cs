@@ -37,7 +37,7 @@ namespace TP_Previo.Controllers
 
         public void SelectCountry()
         {
-            ViewData["requestpais"] = Request.Form["Country"];
+            ViewData["requestpais"] = Request.Form["paises"];
             //if (User.Identity.Name != "" && Request.Form["Country"] != "")
             //{
                 /*SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
@@ -56,7 +56,7 @@ namespace TP_Previo.Controllers
             string strApiUrl = "https://api.mercadolibre.com/classified_locations/countries";
             var json = new WebClient().DownloadString(strApiUrl);
             this.paises = JsonConvert.DeserializeObject<List<Country>>(json);
-            ViewData["paises"] = new SelectList(paises, "Id", "Name", paises[0]);
+            ViewData["paises"] = new SelectList(paises, "Name", "Name", paises[0]);
         }
     }
 }
