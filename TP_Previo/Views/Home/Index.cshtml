@@ -17,19 +17,25 @@
             for enjoyable, agile development.
         </p>
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        @using (Html.BeginForm("Country", "Home"))
+        @if (User.Identity.IsAuthenticated)
         {
-            <div class="form-group">
-                <div class="col-md-10">
-                    My country: @Html.DropDownList("paises")
+            using (Html.BeginForm("Index", "Home", FormMethod.Post, new { }))
+            {
+                <p>@Html.ViewData["usuario"]</p>
+                <p>@Html.ViewData["requestpais"]</p>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        My country: @Html.DropDownList("paises")
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" class="btn btn-default" value="Select Country" />
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" class="btn btn-default" value="Select Country" />
+                    </div>
                 </div>
-            </div>
-        }
+            }
+         }
+
     </div>
     <div class="col-md-4">
         <h2>Get more libraries</h2>

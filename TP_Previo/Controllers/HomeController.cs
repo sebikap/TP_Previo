@@ -16,22 +16,8 @@ namespace TP_Previo.Controllers
         List<Country> paises;
         public ActionResult Index()
         {
-            if (Request.QueryString["Country"] != "")
-            {
-                /*SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-                conn.Open();
-                string query = "UPDATE dbo.AspNetUsers SET Country = " + Request.QueryString["Country"] + " WHERE Email = " + User.Identity.Name;
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.ExecuteNonQuery();
-                cmd.Dispose();
-                conn.Close();*/
-                Console.WriteLine("Usuario Actual: " + User.Identity.Name);
-            }
-            Console.WriteLine("No usuario actual");
-            string strApiUrl = "https://api.mercadolibre.com/classified_locations/countries";
-            var json = new WebClient().DownloadString(strApiUrl);
-            this.paises = JsonConvert.DeserializeObject<List<Country>>(json);
-            ViewData["paises"] = new SelectList(paises, "Id", "Name", paises[0]);
+            LoadCountryDDL();
+            SelectCountry();
             return View();
         }
 
@@ -47,6 +33,30 @@ namespace TP_Previo.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public void SelectCountry()
+        {
+            ViewData["requestpais"] = Request.Form["Country"];
+            //if (User.Identity.Name != "" && Request.Form["Country"] != "")
+            //{
+                /*SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                conn.Open();
+                string query = "UPDATE dbo.AspNetUsers SET Country = " + Request.QueryString["Country"] + " WHERE Email = '" + User.Identity.Name + "'";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.ExecuteNonQuery();
+                cmd.Dispose();
+                conn.Close();*/
+                ViewData["usuario"] = User.Identity.Name;
+            //}
+        }
+
+        public void LoadCountryDDL()
+        {
+            string strApiUrl = "https://api.mercadolibre.com/classified_locations/countries";
+            var json = new WebClient().DownloadString(strApiUrl);
+            this.paises = JsonConvert.DeserializeObject<List<Country>>(json);
+            ViewData["paises"] = new SelectList(paises, "Id", "Name", paises[0]);
         }
     }
 }
